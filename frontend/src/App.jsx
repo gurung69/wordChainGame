@@ -6,16 +6,40 @@ function App() {
   const wordChain = wordChains[getIndex()]
   const [guess, setGuess] = useState('')
   const [wordIndex, setWordIndex] = useState(1)
-  
-  // displayed words 
-  const words = wordChain.map((word, index) => {
-    if (index === 0) {
-      return (<li key={index} className="text-2xl font-semibold">{(word[0].toUpperCase() + word.slice(1)).split("").join(" ")}</li>)
-    }
-    return (
-      <li key={index} className="text-2xl text-gray-600">{word[0].toUpperCase() + " _".repeat(word.length - 1)}</li>
-    )
-  })
+
+  const [words, setWords] = useState([])
+
+  const today = new Date();
+  const date = today.toLocaleDateString()
+
+  function setUpGame(){    
+    const gameState = JSON.parse(localStorage.getItem(date))
+    gameState && setWordIndex(gameState.wordsCompleted + 1)
+    
+    setWords(wordChain.map((word,index)=>{
+      if (index === 0){
+        return(
+          <li key={index} className="text-2xl font-semibold">
+            {(word[0].toUpperCase() + word.slice(1)).split("").join(" ")}
+          </li>
+        )
+      }
+      else if (gameState && index <= gameState.wordsCompleted){
+        return (
+          <li key={index} className='text-2xl text-green-500'>
+            {(word[0].toUpperCase() + word.slice(1)).split("").join(" ")}
+          </li>
+        )
+      }
+      else{
+        return(
+          <li key={index} className="text-2xl text-gray-600">
+            {word[0].toUpperCase() + " _".repeat(word.length - 1)}
+          </li>
+        )
+      }
+    }))
+  }
 
   function checkWin(){
     if (wordIndex === wordChain.length){
@@ -39,6 +63,7 @@ function App() {
       wordList.textContent = (wordChain[wordIndex][0].toUpperCase() + wordChain[wordIndex].slice(1)).split("").join(" ")
       wordList.classList.remove("text-red-500")
       wordList.classList.add("text-green-500")
+      storeGameState()
       setWordIndex(wordIndex + 1)
     }
     else{
@@ -46,6 +71,20 @@ function App() {
       const visibleWord = wordList.textContent.replace(/[_\s]/g, "");
       wordList.textContent = (wordChain[wordIndex][0].toUpperCase() + " " + wordChain[wordIndex].slice(1, visibleWord.length+1).split("").join(" ") + " _".repeat(wordChain[wordIndex].length - visibleWord.length - 1))
       wordList.classList.add("text-red-500")
+    }
+  }
+
+  function storeGameState(){
+    let gameState = JSON.parse(localStorage.getItem(date))
+    if (gameState){
+      gameState.wordsCompleted = wordIndex
+      localStorage.setItem(date, JSON.stringify(gameState))
+    }
+    else{
+      gameState = {
+        wordsCompleted: wordIndex
+      }
+      localStorage.setItem(date, JSON.stringify(gameState))
     }
   }
 
@@ -58,6 +97,10 @@ function App() {
   useEffect(()=>{
     checkWin()
   }, [wordIndex])
+
+  useEffect(()=>{
+    setUpGame()
+  }, [])
 
   return (
     <div className='h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex justify-center items-center'>
