@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import wordChains from './static/wordchian'
+import wordChains from './wordChain'
 
 function App() {
   const wordChain = wordChains[0]
