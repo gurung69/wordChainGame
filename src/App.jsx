@@ -41,6 +41,16 @@ function App() {
     }))
   }
 
+  function updateHighlight(){
+    const movingBorder = document.getElementById('moving-border')
+    const wordList = document.getElementsByTagName('li')[wordIndex]
+    if (movingBorder && wordList) {
+      movingBorder.style.top = `${wordList.offsetTop}px`;
+      movingBorder.style.height = `${wordList.offsetHeight}px`;
+      movingBorder.style.width = `${wordList.offsetWidth}px`
+    }
+  }
+
   function checkWin(){
     if (wordIndex === wordChain.length){
       setTimeout(() => alert("You Win!"), 500)
@@ -102,15 +112,24 @@ function App() {
     setUpGame()
   }, [])
 
+  useEffect(() => {
+    if (words.length > 0) {
+      updateHighlight()
+    }
+  }, [words, wordIndex]);
+  
+
   return (
     <div className='h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex justify-center items-center'>
       <div className="bg-white p-10 rounded-xl shadow-lg max-w-lg w-full text-center">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-6">{new Date().toDateString()}</h1>
         
         <div className="mb-6">
-          <ul className="space-y-4">
+          <ul className="space-y-4 w-2/3 mx-auto relative">
             {words}
+            <div className='absolute border rounded-xl border-blue-500 transition-all duration-500 ease-in-out' id='moving-border'></div>
           </ul>
+          
         </div>
         
         <form onSubmit={handleSumbit} className="flex justify-center gap-3">
