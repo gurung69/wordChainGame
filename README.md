@@ -1,12 +1,33 @@
-# React + Vite
+# Word Chain Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and addictive word puzzle game popular on **TikTok**, built with **React**, **Vite**, and **Tailwind CSS**.
 
-Currently, two official plugins are available:
+[🎮 **Play Now**](https://word-chain-game-ruddy.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to Play
 
-## Expanding the ESLint configuration
+- Each **row** on the board contains a word.
+- Every word forms a **common English phrase** with the word **directly below** it.
+- The **first word** and the **first letter of each missing word** are given.
+- Your task is to guess the **6 missing words**.
+- A **new puzzle** is available **every other day**!
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Example
+
+If a board shows
+
+I c e
+
+T _ _
+
+Then the guess can be Tea -> forming `Ice Tea`
+
+
+## Installation
+
+```bash
+git clone git@github.com:gurung69/wordChainGame.git
+cd wordChainGame
+npm install
+npm run dev
+```
