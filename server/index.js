@@ -28,17 +28,31 @@ io.on('connection', (socket)=>{
         if (room) {
             socket.join(roomId);
             io.to(roomId).emit('room-joined');
-            socket.to(roomId).emit('create-gameIndex', socket.id);
+            setTimeout(()=>socket.to(roomId).emit('setup-game'), 2000)
             cb({ success: true });
         } else {
             cb({ success: false, message: "Room does not exist." });
         }
     });
 
-    socket.on('gameIndex', playerIndex=>{
+    socket.on('setup-game', (length)=>{
         const room = Array.from(socket.rooms)[1];
 
-        io.to(room).emit('gameIndex', playerIndex)
+        let index1 = Math.floor(Math.random() * (length - 0 + 1)) + 0;
+        let index2 = index1;
+
+        while (index1 === index2) {
+            index2 = Math.floor(Math.random() * (length - 0 + 1)) + 0;
+        }
+
+        io.to(socket.id).emit('start-game', {'you': index1, 'opponent': index2, 'turn': true})
+        socket.to(room).emit('start-game', {'you': index2, 'opponent': index1, 'turn': false})
+    })
+
+    socket.on('toogle-turn', (gameSate)=>{
+        const room = Array.from(socket.rooms)[1]
+
+        socket.to(room).emit('toogle-turn', gameSate)
     })
 })
 
