@@ -10,9 +10,11 @@ import JoinRoom from './components/JoinRoom'
 function App() {
   const [multiplayerView, setMultiplayerView] = useState(false)
 
-  socket.on('room-joined', ()=>{
-    setMultiplayerView(true)
-  })
+  useEffect(()=>{
+    socket.on('room-joined', ()=>{
+      setMultiplayerView(true)
+    })
+  }, [])
 
   return (
     <div className='h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex justify-center items-center'>
