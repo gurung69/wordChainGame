@@ -46,6 +46,7 @@ function MultiplayerView(){
     function checkGuess(){
         if (wordChain[wordIndex].toLowerCase() === guess.toLowerCase()){
             setWordIndex(wordIndex+1)
+            setShownLetters(0)
         }
         else{
             setShownLetters(lettersShown + 1)
