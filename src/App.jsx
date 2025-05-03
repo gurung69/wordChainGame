@@ -19,7 +19,7 @@ function App() {
   return (
     <div className='h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex justify-center items-center'>
       <div className="bg-white p-10 rounded-xl shadow-lg max-w-lg w-full text-center">
-        {multiplayerView? <MultiplayerView/>: 
+        {multiplayerView? <MultiplayerView updateView={setMultiplayerView}/>: 
         <>
           <CreateRoom />
           <JoinRoom />
