@@ -1,0 +1,23 @@
+{
+  "name": "word-chain",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/gurung69/wordChainGame#readme",
+  "bugs": {
+    "url": "https://github.com/gurung69/wordChainGame/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurung69/wordChainGame.git"
+  },
+  "license": "ISC",
+  "author": "krish",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build",
+    "start": "cd server && node index.js"
+  }
+}
