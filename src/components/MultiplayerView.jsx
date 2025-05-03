@@ -13,6 +13,7 @@ function MultiplayerView(){
     const [turn, setTurn] = useState(false)
     const [wordIndex, setWordIndex] = useState(1)
     const [lettersShown, setShownLetters] = useState(0)
+    const [countTurn, setCountTurn] = useState(0)
 
     function handleSetUp(){
         console.log('setting up')
@@ -56,7 +57,8 @@ function MultiplayerView(){
     function updateGameState(){
         setGameState({
             currentWordIndex: wordIndex,
-            lettersShown: lettersShown
+            lettersShown: lettersShown,
+            turns: countTurn
         })
     }
 
@@ -64,6 +66,7 @@ function MultiplayerView(){
         e.preventDefault()
         checkGuess()
         setGuess('')
+        setCountTurn(countTurn + 1)
     }
 
     useEffect(()=>{
@@ -74,6 +77,20 @@ function MultiplayerView(){
         setTurn(false)
         socket.emit('toogle-turn', gameState)
     }, [gameState])
+
+    useEffect(()=>{
+        if (opponentGameState && wordChain && gameState){
+            if (opponentGameState.currentWordIndex >= wordChain.length && opponentGameState.turns < gameState.turns){
+                alert('You lose!')
+            }
+            else if(opponentGameState.currentWordIndex < wordChain.length && gameState.currentWordIndex >= wordChain.length && opponentGameState.turns > gameState.turns){
+                alert('You win!')
+            }
+            else if (opponentGameState.currentWordIndex >= wordChain.length && gameState.currentWordIndex >= wordChain.length && opponentGameState.turns == gameState.turns){
+                alert('Draw!')
+            }
+        }
+    }, [opponentGameState, gameState])
    
     
     return (
