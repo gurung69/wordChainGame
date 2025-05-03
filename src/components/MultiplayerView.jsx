@@ -4,7 +4,7 @@ import wordChains from "../wordChain"
 import Board from "./Board"
 import { CircularProgress } from "@mui/material"
 
-function MultiplayerView(){
+function MultiplayerView({updateView}){
     const [guess, setGuess] = useState('')
     const [gameState, setGameState] = useState(null)
     const [opponentGameState, setOpponentGameState] = useState(null)
@@ -32,15 +32,25 @@ function MultiplayerView(){
         setTurn(true)
     }
 
+    function handlePlayerLeft(){
+        alert('Opponent left the room')
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1000);
+        updateView(false)
+    }
+
     useEffect(()=>{
         socket.on('setup-game', handleSetUp)
         socket.on('start-game', handleStartGame)
         socket.on('toogle-turn', handleStartTurn)
+        socket.on('player-left', handlePlayerLeft)
 
         return ()=>{
             socket.off('setup-game', handleSetUp)
             socket.off('start-game', handleStartGame)
             socket.off('toogle-turn', handleStartTurn)
+            socket.off('player-left', handlePlayerLeft)
         }
     }, [])
 
