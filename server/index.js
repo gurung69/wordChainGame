@@ -1,5 +1,4 @@
 const express = require('express')
-const { socket } = require('../src/socket')
 const { v4: uuidv4} = require('uuid')
 
 const app = express()
