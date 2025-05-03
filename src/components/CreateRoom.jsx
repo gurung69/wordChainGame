@@ -19,6 +19,8 @@ function CreateRoom(){
     const handleClose = () => {
         setOpen(false);
         setLoading(true);
+
+        socket.emit('leave-room', roomId)
     };
 
 
