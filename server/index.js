@@ -12,6 +12,16 @@ const io = require('socket.io')(httpServer, {
     }
 })
 
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
 
 io.on('connection', (socket)=>{
     console.log(`User ${socket.id} connected`)
