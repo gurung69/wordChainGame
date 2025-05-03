@@ -25,15 +25,19 @@ io.on('connection', (socket)=>{
     socket.on('join-room', (roomId, cb) => {
         const room = io.sockets.adapter.rooms.get(roomId);
     
-        if (room) {
+        if (room && room.size < 2) {
             socket.join(roomId);
             io.to(roomId).emit('room-joined');
             setTimeout(()=>socket.to(roomId).emit('setup-game'), 2000)
             cb({ success: true });
         } else {
-            cb({ success: false, message: "Room does not exist." });
+            cb({ success: false, message: "Unable to join room" });
         }
     });
+
+    socket.on('leave-room', (roomId)=>{
+        socket.leave(roomId)
+    })
 
     socket.on('setup-game', (length)=>{
         const room = Array.from(socket.rooms)[1];
