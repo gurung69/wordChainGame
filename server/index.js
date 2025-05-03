@@ -2,15 +2,8 @@ const express = require('express')
 const { v4: uuidv4} = require('uuid')
 
 const app = express()
+const path = require('path');
 const httpServer = require('http').createServer(app)
-
-// --- Serve React app static files ---
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-// --- Serve React app for any route not handled by the server ---
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
 
 const io = require('socket.io')(httpServer, {
     cors: {
@@ -18,6 +11,13 @@ const io = require('socket.io')(httpServer, {
         methods: ['GET', 'POST']
     }
 })
+
+app.use(express.static(path.join(__dirname, '../client/dist')))
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../client/dist', "index.html"))
+})
+
 
 io.on('connection', (socket)=>{
     console.log(`User ${socket.id} connected`)
