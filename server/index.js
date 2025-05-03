@@ -15,10 +15,21 @@ const io = require('socket.io')(httpServer, {
 io.on('connection', (socket)=>{
     console.log(`User ${socket.id} connected`)
 
+    socket.on('disconnect', ()=>{
+        const roomId = socket.gameroom
+
+        socket.to(roomId).emit('player-left')
+        console.log(roomId)
+
+        console.log(`Socket disconnected: ${socket.id}`)
+    })
+
     socket.on('create-room', (cb)=>{
         const roomId = uuidv4()
 
         socket.join(roomId)
+
+        socket.gameroom = roomId
         cb(roomId)
     })
 
@@ -28,6 +39,7 @@ io.on('connection', (socket)=>{
         if (room && room.size < 2) {
             socket.join(roomId);
             io.to(roomId).emit('room-joined');
+            socket.gameroom = roomId
             setTimeout(()=>socket.to(roomId).emit('setup-game'), 2000)
             cb({ success: true });
         } else {
@@ -37,6 +49,7 @@ io.on('connection', (socket)=>{
 
     socket.on('leave-room', (roomId)=>{
         socket.leave(roomId)
+        socket.gameroom = null
     })
 
     socket.on('setup-game', (length)=>{
