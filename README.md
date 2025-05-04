@@ -1,6 +1,6 @@
 # Word Chain Game
 
-A fun and addictive word puzzle game popular on **TikTok**, built with **React**, **Vite**, and **Tailwind CSS**.
+A fun and addictive word puzzle game popular on **TikTok**, built with **React**, **Tailwind CSS**, **Node JS** and **WebSocket.IO**.
 
 [🎮 **Play Now**](https://wordchaingame-8nqf.onrender.com)
 
@@ -11,6 +11,13 @@ A fun and addictive word puzzle game popular on **TikTok**, built with **React**
 - The **first word** and the **first letter of each missing word** are given.
 - Your task is to guess the **6 missing words**.
 - A **new puzzle** is available **every other day**!
+
+## Two-Player Mode 🎮
+
+- Challenge your friends by playing **against each other in real-time**!
+- **One player creates a room** and **the other player joins** using the room code.
+- Both players take turns on **solving the puzzle** and can see each other's guesses instantly.
+- Race to see who can complete the chain first!
 
 ## Example
 
