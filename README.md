@@ -2,7 +2,7 @@
 
 A fun and addictive word puzzle game popular on **TikTok**, built with **React**, **Vite**, and **Tailwind CSS**.
 
-[🎮 **Play Now**](https://word-chain-game-ruddy.vercel.app/)
+[🎮 **Play Now**](https://wordchaingame-8nqf.onrender.com)
 
 ## How to Play
 
@@ -28,6 +28,7 @@ Then the guess can be Tea -> forming `Ice Tea`
 ```bash
 git clone git@github.com:gurung69/wordChainGame.git
 cd wordChainGame
-npm install
-npm run dev
+npm run install
+npm run build
+npm run start
 ```
