@@ -43,7 +43,7 @@ function SinglePlayerView(){
     }
 
     function checkGuess(){
-        if (wordChain[wordIndex].toLowerCase() === guess.toLowerCase()){
+        if (wordChain[wordIndex].toLowerCase() === guess.toLowerCase() || wordChain[wordIndex].length-1 === shownLetters){
           setWordIndex(wordIndex + 1)
           setShownLetters(0)
         }
