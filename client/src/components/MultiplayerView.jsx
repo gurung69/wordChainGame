@@ -21,8 +21,7 @@ function MultiplayerView({updateView}){
     }
 
     function handleStartGame(gameInfo){
-        console.log(wordChains[1])
-        setWordChain(wordChains[1])
+        setWordChain(wordChains[gameInfo.you])
         setOpponentWordChain(wordChains[gameInfo.opponent])
         setTurn(gameInfo.turn)
     }
