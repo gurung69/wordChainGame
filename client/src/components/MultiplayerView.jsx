@@ -21,8 +21,8 @@ function MultiplayerView({updateView}){
     }
 
     function handleStartGame(gameInfo){
-        console.log(wordChains[gameInfo.you])
-        setWordChain(wordChains[gameInfo.you])
+        console.log(wordChains[1])
+        setWordChain(wordChains[1])
         setOpponentWordChain(wordChains[gameInfo.opponent])
         setTurn(gameInfo.turn)
     }
@@ -55,7 +55,7 @@ function MultiplayerView({updateView}){
     }, [])
 
     function checkGuess(){
-        if (wordChain[wordIndex].toLowerCase() === guess.toLowerCase()){
+        if (wordChain[wordIndex].toLowerCase() === guess.toLowerCase() || wordChain[wordIndex].length-1 === lettersShown){
             setWordIndex(wordIndex+1)
             setShownLetters(0)
         }
@@ -90,10 +90,10 @@ function MultiplayerView({updateView}){
 
     useEffect(()=>{
         if (opponentGameState && wordChain && gameState){
-            if (opponentGameState.currentWordIndex >= wordChain.length && opponentGameState.turns < gameState.turns){
+            if (opponentGameState.currentWordIndex == wordChain.length && opponentGameState.turns == gameState.turns && gameState.currentWordIndex < wordChain.length){
                 alert('You lose!')
             }
-            else if(opponentGameState.currentWordIndex < wordChain.length && gameState.currentWordIndex >= wordChain.length && opponentGameState.turns > gameState.turns){
+            else if(opponentGameState.currentWordIndex < wordChain.length && gameState.currentWordIndex == wordChain.length && opponentGameState.turns == gameState.turns){
                 alert('You win!')
             }
             else if (opponentGameState.currentWordIndex >= wordChain.length && gameState.currentWordIndex >= wordChain.length && opponentGameState.turns == gameState.turns){
